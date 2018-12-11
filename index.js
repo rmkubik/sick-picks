@@ -1,5 +1,7 @@
 import "babel-polyfill";
+import "./typography";
 import Parser from "rss-parser";
+import dateFormat from "date-fns/format";
 
 const isSickPick = header =>
   header.innerText
@@ -19,7 +21,7 @@ const rssParser = new Parser();
     sickPick.appendChild(header);
 
     const pubDate = document.createElement("p");
-    pubDate.innerText = item.pubDate;
+    pubDate.innerText = dateFormat(new Date(item.pubDate), "MMMM D, YYYY");
     sickPick.appendChild(pubDate);
 
     const domParser = new DOMParser();

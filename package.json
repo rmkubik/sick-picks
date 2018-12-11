@@ -10,9 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "date-fns": "^1.30.1",
     "htm": "^1.0.1",
     "preact": "^8.4.2",
-    "rss-parser": "^3.5.4"
+    "rss-parser": "^3.5.4",
+    "typography": "^0.16.18",
+    "typography-theme-ocean-beach": "^0.16.18"
   },
   "devDependencies": {
     "parcel": "^1.10.3"
