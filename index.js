@@ -2,12 +2,15 @@ import "babel-polyfill";
 import "./typography";
 import Parser from "rss-parser";
 import dateFormat from "date-fns/format";
+import nextUntil from './nextUntil';
+import overrides from './overrides';
 
 const isSickPick = header =>
   header.innerText
     .toLowerCase()
     .trim()
-    .match(/si(.*)ck(.*)pi(.*)ck/);
+    .match(/si.*ck.*pi.*ck/);
+
 const rssParser = new Parser();
 
 (async () => {
@@ -26,14 +29,24 @@ const rssParser = new Parser();
 
     const domParser = new DOMParser();
     const doc = domParser.parseFromString(item.content, "text/html");
-    const headers = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
-    const picks = [...headers]
-      .filter(isSickPick)
-      .map(header => header.nextElementSibling)
-      .filter(sickPick => sickPick); // remove null elements
+    const headers = doc.querySelectorAll('h2');
+    const headerTag = [...headers].find(isSickPick);
 
-    if (picks[0] instanceof Node) {
-      sickPick.appendChild(picks[0]);
+    if (headerTag) {
+      let picks;
+      if (overrides.some(override => override.title === item.title)) {
+        const override = domParser.parseFromString(overrides.find(override => override.title === item.title).picks, "text/html");
+        picks = [...override.body.children];
+      } else {
+        picks = nextUntil(headerTag, 'h2');
+      }
+  
+      picks.forEach(pick => {
+        if (pick instanceof Node) {
+          sickPick.appendChild(pick);
+        }
+      })
+
       sickPicks.push(sickPick);
     }
   });
