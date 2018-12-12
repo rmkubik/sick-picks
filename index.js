@@ -32,7 +32,7 @@ const rssParser = new Parser();
     const headers = doc.querySelectorAll('h2');
     const headerTag = [...headers].find(isSickPick);
 
-    if (headerTag) {
+    if (headerTag || overrides.some(override => override.title === item.title)) {
       let picks;
       if (overrides.some(override => override.title === item.title)) {
         const override = domParser.parseFromString(overrides.find(override => override.title === item.title).picks, "text/html");

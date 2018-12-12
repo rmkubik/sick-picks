@@ -1,3 +1,4 @@
 import arrayFns from './arrayFnsPicks';
+import holidayGiftGuide from './holidayGiftGuide';
 
-export default [arrayFns];
+export default [arrayFns, holidayGiftGuide];
