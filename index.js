@@ -15,7 +15,9 @@ const rssParser = new Parser();
 
 (async () => {
   try {
-    const feed = await rssParser.parseURL("https://feed.syntax.fm/rss");
+    const feedResponse = await fetch("https://feed.syntax.fm/rss");
+    const feedString = await feedResponse.text();
+    const feed = await rssParser.parseString(feedString);
     let sickPicks = [];
     feed.items.forEach(item => {
       const sickPick = document.createElement("div");
