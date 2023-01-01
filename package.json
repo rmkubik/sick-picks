@@ -17,6 +17,6 @@
     "typography-theme-ocean-beach": "^0.16.18"
   },
   "devDependencies": {
-    "parcel": "^1.10.3"
+    "parcel": "^2.8.2"
   }
 }
